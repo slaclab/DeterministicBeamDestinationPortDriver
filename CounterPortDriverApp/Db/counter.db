@@ -1,6 +1,0 @@
-record(ai, "$(USER):get:set:holder")
-{
-    field(DTYP, "asynFloat64")
-    field(INP, "@asyn($(PORT),$(ADDR),$(TIMEOUT))SCOPE_COUNTER")
-    field(SCAN, "I/O Intr")
-  }
