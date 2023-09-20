@@ -1,2 +1,3 @@
 registrar(CounterDriverRegister)
-##registrar(GetterDriverRegister)
+registrar(GetterDriverRegister)
+registrar(WaterDriverRegister)

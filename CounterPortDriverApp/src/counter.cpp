@@ -14,8 +14,8 @@ CounterDriver::CounterDriver(const char *portName) : asynPortDriver(
     0
     )
 {
-  //createParam(P_CounterString, asynParamFloat64, &P_Count);
-  createParam(P_GetterString,asynParamFloat64, &P_Count);
+  createParam(P_CounterString, asynParamFloat64, &P_Count);
+  createParam(P_CounterString2, asynParamFloat64, &P_Count2);
   asynStatus status;
   status = (asynStatus)(epicsThreadCreate("LujkoCounterTask", epicsThreadPriorityMedium, epicsThreadGetStackSize(epicsThreadStackMedium), (EPICSTHREADFUNC)::counterTask, this) == NULL);
   if (status)
@@ -34,20 +34,20 @@ void counterTask(void* driverPointer)
 
 void CounterDriver::counterTask(void)
 {
-  double twice;
+  double twice, thrice;
   for(int x = 0; x <=100; x++)
   {
     sleep(4);
     setDoubleParam(P_Count, x);
     getDoubleParam(P_Count, &twice);
-    printf("Shoot me it grabbed this: %f\n", twice);
+    callParamCallbacks();
+    //printf("it grabbed this: %f\n", twice);
+    setDoubleParam(P_Count2, 33);
+    getDoubleParam(P_Count2, &thrice);
+    printf("Retrieved vals: %f, %f", twice, thrice);
     callParamCallbacks();
   }
 }
-
-//New again
-
-//Old again
 
 extern "C" {
   int CounterDriverConfigure(const char* portName) {
@@ -65,22 +65,4 @@ extern "C" {
     iocshRegister(&initFuncDef, initCallFunc);
   }
   epicsExportRegistrar(CounterDriverRegister);
-/**
-  //New things
-  int GetterDriverConfigure(const char* portName) {
-    new GetterDriver(portName);
-    return asynSuccess;
-  }
-  static const iocshArg initArg1 = {"portName", iocshArgString};
-  static const iocshArg * const initArgs1[] = {&initArg1};
-  static const iocshFuncDef getterInitFuncDef = {"GetterDriverConfigure", 1, initArgs};
-  static void getterInitCallFunc(const iocshArgBuf *args)
-  {
-    GetterDriverConfigure(args[0].sval);
-  }
-  void GetterDriverRegister(void) {
-    iocshRegister(&getterInitFuncDef, getterInitCallFunc);
-  }
-  epicsExportRegistrar(GetterDriverRegister);
-  **/ 
 }

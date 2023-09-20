@@ -25,7 +25,9 @@ CounterPortDriver_DBD += register.dbd
 # CounterPortDriver_registerRecordDeviceDriver.cpp derives from CounterPortDriver.dbd
 CounterPortDriver_SRCS += CounterPortDriver_registerRecordDeviceDriver.cpp
 CounterPortDriver_SRCS += counter.cpp
-# CounterPortDriver_SRCS += getter.cpp
+CounterPortDriver_SRCS += getter.cpp
+CounterPortDriver_SRCS += tank.cpp
+
 # Build the main IOC entry point on workstation OSs.
 CounterPortDriver_SRCS_DEFAULT += CounterPortDriverMain.cpp
 CounterPortDriver_SRCS_vxWorks += -nil-

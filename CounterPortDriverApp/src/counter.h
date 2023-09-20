@@ -17,6 +17,7 @@
 using namespace std;
 
 #define P_CounterString "SCOPE_COUNTER"
+#define P_CounterString2 "SCOPE_COUNTER_2"
 
 class CounterDriver : public asynPortDriver {
   public:
@@ -24,10 +25,10 @@ class CounterDriver : public asynPortDriver {
     void counterTask(void);
   protected:
     int P_Count;
+    int P_Count2;
 };
 
 //New Stuff, should be able to comment out and reset?
-#define P_GetterString "SCOPE_GETTER"
 /**
 class GetterDriver : public asynPortDriver {
   public:
