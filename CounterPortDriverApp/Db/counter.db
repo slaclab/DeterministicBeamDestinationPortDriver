@@ -3,14 +3,14 @@
 record(ai, "$(USER):get:set:one")
 {
     field(DTYP, "asynFloat64")
-    field(INP, "@asyn($(PORT),$(ADDR),$(TIMEOUT))SCOPE_COUNTER")
+    field(INP, "@asyn($(PORT),$(ADDR),$(TIMEOUT))COUNTER")
     field(SCAN, "I/O Intr")
   }
 
 record(ai, "$(USER):get:set:two")
 {
     field(DTYP, "asynFloat64")
-    field(INP, "@asyn($(PORT),$(ADDR),$(TIMEOUT))SCOPE_COUNTER_2")
+    field(INP, "@asyn($(PORT),$(ADDR),$(TIMEOUT))SCALAR")
     field(SCAN, "I/O Intr")
   }
 
