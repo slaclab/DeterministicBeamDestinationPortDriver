@@ -28,6 +28,27 @@ record(mbbi, "$(USER):HXR_STATE")
   field(SCAN, "I/O Intr")
 }
 
+record(mbbi, "$(USER):SXR_STATE")
+{
+  field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))SXR_STATE")
+  field(DTYP, "asynInt32")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(TWVL, "2")
+  field(THVL, "3")
+  field(FRVL, "4")
+  field(FVVL, "5")
+  field(SXVL, "6")
+  field(ZRST, "Beam Off")
+  field(ONST, "Inj. Spectrometer")
+  field(TWST, "TD-11")
+  field(THST, "ST-CLTS")
+  field(FRST, "BYKIKS")
+  field(FVST, "TDUNDB")
+  field(SXST, "SXR Dump")
+  field(SCAN, "I/O Intr")
+}
+
 record(ao, "$(USER):SHUTTER") 
 {
   field(DOL,     "MPS:IN20:200:MSHT1_IN_MPS CPP")
@@ -123,6 +144,55 @@ record(ao, "$(USER):TDUND_IN")
   field(DTYP,    "asynInt32")
   field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))TDUND_IN")
 }
+
+record(ao, "$(USER):SXR_PERMIT") 
+{
+  field(DOL,     "IOC:BSY0:MP01:GUNSXR_RATE CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynFloat64")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))HXR_PERMIT")
+}
+
+record(ao, "$(USER):SOFT_INJRATE") 
+{
+  field(DOL,     "EVNT:SYS0:1:NC_SOFT_INJRATE CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynFloat64")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))HARD_INJRATE")
+}
+
+record(ao, "$(USER):ST_CLTS_IN_A") 
+{
+  field(DOL,     "PPS:BSYS:1:STCLTS:OUT_A CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))ST_CLTS_IN_A")
+}
+
+record(ao, "$(USER):ST_CLTS_IN_B") 
+{
+  field(DOL,     "PPS:BSYS:1:STCLTS:OUT_B CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))ST_CLTS_IN_B")
+}
+
+record(ao, "$(USER):BYKIKS") 
+{
+  field(DOL,     "IOC:BSY0:MP01:BYKIKS_RATE CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))BYKIKS")
+}
+
+record(ao, "$(USER):TDUNDB_IN") 
+{
+  field(DOL,     "DUMP:LTUS:972:TGT_STS CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))TDUNDB_IN")
+}
+
 
 record(longout, "$(USER):TEST") 
 {
