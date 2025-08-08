@@ -44,7 +44,6 @@ GetterDriver::GetterDriver(const char *portName): asynPortDriver(
   createParam("BYKIKS", asynParamInt32, &bykiks_idx);
   createParam("TDUNDB_IN", asynParamInt32, &tdundb_in_idx);
 
-  createParam(P_GetterString, asynParamFloat64, &P_Getter);
   asynStatus status_hxr;
   status_hxr = (asynStatus)(epicsThreadCreate("HXRGetterTask", epicsThreadPriorityMedium, epicsThreadGetStackSize(epicsThreadStackMedium), (EPICSTHREADFUNC)::hxrTask, this) == NULL);
   if (status_hxr)

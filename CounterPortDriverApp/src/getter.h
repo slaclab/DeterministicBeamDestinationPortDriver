@@ -16,16 +16,13 @@
 
 using namespace std;
 
-#define P_GetterString "SCOPE_GETTER"
-
 class GetterDriver : public asynPortDriver {
   public:
     GetterDriver(const char *portName);
     void hxrTask(void);
     void sxrTask(void);
-    
+
   protected:
-    int P_Getter;
 
     int hxr_state_idx;
     int sxr_state_idx;

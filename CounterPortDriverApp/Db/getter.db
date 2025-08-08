@@ -1,11 +1,5 @@
 ## getter.db
 
-record(ao, "$(USER):retrieval")
-{
-    field(DTYP, "asynFloat64")
-    field(OUT, "@asyn($(PORT),$(ADDR),$(TIMEOUT))SCOPE_GETTER")
-    ##field(SCAN, "I/O Intr")
-  }
 
 record(mbbi, "$(USER):HXR_STATE")
 {
@@ -191,18 +185,4 @@ record(ao, "$(USER):TDUNDB_IN")
   field(OMSL,    "closed_loop")
   field(DTYP,    "asynInt32")
   field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))TDUNDB_IN")
-}
-
-
-record(longout, "$(USER):TEST") 
-{
-  field(DOL,     "SIOC:UNDH:MP07:SR_0_State CPP")
-  field(OMSL,    "closed_loop")
-  field(FLNK,    "$(USER):TEST_RBV")
-  field(OUT,     "$(USER):TEST_RBV")
-}
-
-record(longin, "$(USER):TEST_RBV") 
-{
-  field(INP, "$(USER):TEST")
 }
