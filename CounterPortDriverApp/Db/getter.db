@@ -6,3 +6,133 @@ record(ao, "$(USER):retrieval")
     field(OUT, "@asyn($(PORT),$(ADDR),$(TIMEOUT))SCOPE_GETTER")
     ##field(SCAN, "I/O Intr")
   }
+
+record(mbbi, "$(USER):HXR_STATE")
+{
+  field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))HXR_STATE")
+  field(DTYP, "asynInt32")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(TWVL, "2")
+  field(THVL, "3")
+  field(FRVL, "4")
+  field(FVVL, "5")
+  field(SXVL, "6")
+  field(ZRST, "Beam Off")
+  field(ONST, "Inj. Spectrometer")
+  field(TWST, "TD-11")
+  field(THST, "DT")
+  field(FRST, "BYKIK")
+  field(FVST, "TDUND")
+  field(SXST, "HXR Dump")
+  field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(USER):SHUTTER") 
+{
+  field(DOL,     "MPS:IN20:200:MSHT1_IN_MPS CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))SHUTTER")
+}
+
+record(ao, "$(USER):BCS_FAULT") 
+{
+  field(DOL,     "BCS:MCC0:1:BEAMPMSV CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))BCS_FAULT")
+}
+
+record(ao, "$(USER):GUN_OFF") 
+{
+  field(DOL,     "IOC:BSY0:MP01:PC_RATE CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))GUN_OFF")
+}
+
+record(ao, "$(USER):GUN_RATE") 
+{
+  field(DOL,     "EVNT:SYS0:1:LCLSBEAMRATE CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynFloat64")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))GUN_RATE")
+}
+
+record(ao, "$(USER):HXR_PERMIT") 
+{
+  field(DOL,     "IOC:BSY0:MP01:GUNHXR_RATE CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynFloat64")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))HXR_PERMIT")
+}
+
+record(ao, "$(USER):HARD_INJRATE") 
+{
+  field(DOL,     "EVNT:SYS0:1:NC_HARD_INJRATE CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynFloat64")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))HARD_INJRATE")
+}
+
+record(ao, "$(USER):SPECTROMETER_STATE") 
+{
+  field(DOL,     "BEND:IN20:931:STATE CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))SPECTROMETER_STATE")
+}
+
+record(ao, "$(USER):TD_11_IN") 
+{
+  field(DOL,     "DUMP:LI21:305:TGT_STS CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))TD_11_IN")
+}
+
+record(ao, "$(USER):D2_IN_A") 
+{
+  field(DOL,     "STPR:BSYH:2:STD2_OUT_A CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))D2_IN_A")
+}
+
+record(ao, "$(USER):D2_IN_B") 
+{
+  field(DOL,     "STPR:BSYH:2:STD2_OUT_B CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))D2_IN_B")
+}
+
+record(ao, "$(USER):BYKIK") 
+{
+  field(DOL,     "IOC:BSY0:MP01:BYKIK_RATE  CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))BYKIK")
+}
+
+record(ao, "$(USER):TDUND_IN") 
+{
+  field(DOL,     "DUMP:LTUH:970:TGT_STS  CPP")
+  field(OMSL,    "closed_loop")
+  field(DTYP,    "asynInt32")
+  field(OUT,     "@asyn($(PORT),$(ADDR),$(TIMEOUT))TDUND_IN")
+}
+
+record(longout, "$(USER):TEST") 
+{
+  field(DOL,     "SIOC:UNDH:MP07:SR_0_State CPP")
+  field(OMSL,    "closed_loop")
+  field(FLNK,    "$(USER):TEST_RBV")
+  field(OUT,     "$(USER):TEST_RBV")
+}
+
+record(longin, "$(USER):TEST_RBV") 
+{
+  field(INP, "$(USER):TEST")
+}

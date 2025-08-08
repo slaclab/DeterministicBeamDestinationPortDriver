@@ -8,14 +8,32 @@ void getterTask(void *driverPointer);
 GetterDriver::GetterDriver(const char *portName): asynPortDriver(
     portName,
     1,
-    asynFloat64Mask,
-    asynFloat64Mask,
+    asynDrvUserMask | asynInt32ArrayMask | asynInt16ArrayMask | asynUInt32DigitalMask | asynInt32Mask | asynFloat64Mask | asynFloat64ArrayMask,
+    asynInt32ArrayMask | asynInt16ArrayMask | asynInt32Mask | asynUInt32DigitalMask | asynFloat64Mask | asynFloat64ArrayMask,
     0,
     1,
     0,
     0
     )
 {
+  createParam("HXR_STATE", asynParamInt32, &hxr_state_idx);
+
+  createParam("SHUTTER", asynParamInt32, &shutter_idx);
+  createParam("BCS_FAULT", asynParamInt32, &bcs_fault_idx);
+  createParam("GUN_OFF", asynParamInt32, &gun_off_idx);
+  createParam("GUN_RATE", asynParamFloat64, &gun_rate_idx);
+
+  createParam("HXR_PERMIT", asynParamFloat64, &hxr_permit_idx);
+  createParam("HARD_INJRATE", asynParamFloat64, &hard_injrate_idx);
+
+  createParam("SPECTROMETER_STATE", asynParamInt32, &spectrometer_state_idx);
+  createParam("TD_11_IN", asynParamInt32, &td_11_in_idx);
+
+  createParam("D2_IN_A", asynParamInt32, &d2_in_1_idx);
+  createParam("D2_IN_B", asynParamInt32, &d2_in_2_idx);
+  createParam("BYKIK", asynParamInt32, &bykik_idx);
+  createParam("TDUND_IN", asynParamInt32, &tdund_in_idx);
+
   createParam(P_GetterString, asynParamFloat64, &P_Getter);
   asynStatus status;
   status = (asynStatus)(epicsThreadCreate("LujkoGetterTask", epicsThreadPriorityMedium, epicsThreadGetStackSize(epicsThreadStackMedium), (EPICSTHREADFUNC)::getterTask, this) == NULL);
@@ -34,14 +52,6 @@ void getterTask(void *driverPointer)
 
 void GetterDriver::getterTask(void)
 {
-  double variable;
-  for(int x = 0; x <= 100; x++)
-  {
-    sleep(1);
-    //printf("Things");
-    getDoubleParam(P_Getter, &variable);
-    printf("Retrieved variable is %f\n", variable);
-  }
   int state = 0;
   int shutter;
   int bcs_fault;
@@ -49,6 +59,13 @@ void GetterDriver::getterTask(void)
   double gun_rate;
   double hxr_permit;
   double hard_injrate;
+
+  getIntegerParam(shutter_idx, &shutter);
+  getIntegerParam(bcs_fault_idx, &bcs_fault);
+  getIntegerParam(gun_off_idx, &gun_off);
+  getDoubleParam(gun_rate_idx, &gun_rate);
+  getDoubleParam(hxr_permit_idx, &hxr_permit);
+  getDoubleParam(hard_injrate_idx, &hard_injrate);
   
   if (not(shutter == 1 or bcs_fault == 0 or gun_off == 1 or gun_rate == 0 or hxr_permit == 1 or hard_injrate == 0))
   {
@@ -58,6 +75,13 @@ void GetterDriver::getterTask(void)
     int d2_in_2;
     int bykik;
     int tdund_in;
+
+    getIntegerParam(spectrometer_state_idx, &spectrometer_state);
+    getIntegerParam(td_11_in_idx, &td_11_in);
+    getIntegerParam(d2_in_1_idx, &d2_in_1);
+    getIntegerParam(d2_in_2_idx, &d2_in_2);
+    getIntegerParam(bykik_idx, &bykik);
+    getIntegerParam(tdund_in_idx, &tdund_in);
 
     if (spectrometer_state == 0)
     {
@@ -83,17 +107,11 @@ void GetterDriver::getterTask(void)
     {
       state = 6;  
     }
-    
-
-
-
   }
 
-
   //Set param of state
-
-
-
+  setIntegerParam(hxr_state_idx, state);
+  callParamCallbacks();
 }
 
 
