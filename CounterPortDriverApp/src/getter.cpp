@@ -77,58 +77,61 @@ void GetterDriver::hxrTask(void)
   double hxr_permit;
   double hard_injrate;
 
-  getIntegerParam(shutter_idx, &shutter);
-  getIntegerParam(bcs_fault_idx, &bcs_fault);
-  getIntegerParam(gun_off_idx, &gun_off);
-  getDoubleParam(gun_rate_idx, &gun_rate);
-  getDoubleParam(hxr_permit_idx, &hxr_permit);
-  getDoubleParam(hard_injrate_idx, &hard_injrate);
-  
-  if (not(shutter == 1 or bcs_fault == 0 or gun_off == 1 or gun_rate == 0 or hxr_permit == 1 or hard_injrate == 0))
+  while (true)
   {
-    int spectrometer_state;
-    int td_11_in;
-    int d2_in_1;
-    int d2_in_2;
-    int bykik;
-    int tdund_in;
+    getIntegerParam(shutter_idx, &shutter);
+    getIntegerParam(bcs_fault_idx, &bcs_fault);
+    getIntegerParam(gun_off_idx, &gun_off);
+    getDoubleParam(gun_rate_idx, &gun_rate);
+    getDoubleParam(hxr_permit_idx, &hxr_permit);
+    getDoubleParam(hard_injrate_idx, &hard_injrate);
+    
+    if (not(shutter == 1 or bcs_fault == 0 or gun_off == 1 or gun_rate == 0 or hxr_permit == 1 or hard_injrate == 0))
+    {
+      int spectrometer_state;
+      int td_11_in;
+      int d2_in_1;
+      int d2_in_2;
+      int bykik;
+      int tdund_in;
 
-    getIntegerParam(spectrometer_state_idx, &spectrometer_state);
-    getIntegerParam(td_11_in_idx, &td_11_in);
-    getIntegerParam(d2_in_1_idx, &d2_in_1);
-    getIntegerParam(d2_in_2_idx, &d2_in_2);
-    getIntegerParam(bykik_idx, &bykik);
-    getIntegerParam(tdund_in_idx, &tdund_in);
+      getIntegerParam(spectrometer_state_idx, &spectrometer_state);
+      getIntegerParam(td_11_in_idx, &td_11_in);
+      getIntegerParam(d2_in_1_idx, &d2_in_1);
+      getIntegerParam(d2_in_2_idx, &d2_in_2);
+      getIntegerParam(bykik_idx, &bykik);
+      getIntegerParam(tdund_in_idx, &tdund_in);
 
-    if (spectrometer_state == 0)
-    {
-      state = 1;
+      if (spectrometer_state == 0)
+      {
+        state = 1;
+      }
+      else if (td_11_in == 2) 
+      {
+        state = 2;
+      }
+      else if (d2_in_1 == 0 or d2_in_2 == 0)
+      {
+        state = 3;
+      }
+      else if (bykik == 0)
+      {
+        state = 4;
+      }
+      else if (tdund_in == 2)
+      {
+        state = 5;
+      }
+      else 
+      {
+        state = 6;  
+      }
     }
-    else if (td_11_in == 2) 
-    {
-      state = 2;
-    }
-    else if (d2_in_1 == 0 or d2_in_2 == 0)
-    {
-      state = 3;
-    }
-    else if (bykik == 0)
-    {
-      state = 4;
-    }
-    else if (tdund_in == 2)
-    {
-      state = 5;
-    }
-    else 
-    {
-      state = 6;  
-    }
+
+    //Set param of state
+    setIntegerParam(hxr_state_idx, state);
+    callParamCallbacks();
   }
-
-  //Set param of state
-  setIntegerParam(hxr_state_idx, state);
-  callParamCallbacks();
 }
 
 void sxrTask(void *driverPointer)
